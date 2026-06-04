@@ -76,22 +76,22 @@
   }
   .q::before{
     content:counter(qn);counter-increment:qn;
-    position:absolute;left:32px;top:30px;
-    font-family:'Libre Caslon Display',serif;font-size:.95rem;
-    color:var(--navy);
-    border-bottom:1.5px solid var(--brass);padding-bottom:1px;
+    position:absolute;left:32px;top:26px;
+    font-family:'Libre Caslon Display',serif;font-size:1.65rem;
+    line-height:1;color:var(--navy);
+    border-bottom:1.5px solid var(--brass);padding-bottom:2px;
   }
   form{counter-reset:qn;}
   .q .label{
-    margin-left:30px;
+    margin-left:42px;
     font-size:1.06rem;font-weight:600;color:var(--ink);margin-bottom:4px;
   }
   .q .hint{
-    margin-left:30px;font-size:.8rem;color:var(--ink-soft);
+    margin-left:42px;font-size:.8rem;color:var(--ink-soft);
     font-style:italic;margin-bottom:18px;
   }
   .q .hint:last-of-type{margin-bottom:0;}
-  .field-body{margin-left:30px;margin-top:16px;}
+  .field-body{margin-left:42px;margin-top:16px;}
 
   /* ---------- Choice rows ---------- */
   .opt{
@@ -182,7 +182,7 @@
     <div class="eyebrow">Lorain County &middot; Speaker Series</div>
     <h1>Spirit of <span class="yr">'76</span></h1>
     <div class="rule"><span class="star">&#9733;</span></div>
-    <p class="sub">Thank you for joining us this season. Your feedback helps us shape the speakers, topics, and venues to come.</p>
+    <p class="sub">Thank you for joining us. Your feedback helps us shape the speakers, topics, and venues to come.</p>
     <div class="meta">Takes about 3 minutes</div>
   </header>
 
@@ -195,12 +195,12 @@
       <div class="label">Which events did you attend?</div>
       <div class="hint">Select all that apply</div>
       <div class="field-body">
-        <label class="opt"><input type="checkbox"><span>John Kasich &mdash; <em>It's Up to Us!</em> (Jan)</span></label>
-        <label class="opt"><input type="checkbox"><span>David Bier &amp; Steven Volk &mdash; <em>Immigration: What is the Way Forward?</em> (Feb)</span></label>
-        <label class="opt"><input type="checkbox"><span>Claire Babineaux-Fontenot &mdash; <em>New Tools to End Hunger</em> (Mar)</span></label>
-        <label class="opt"><input type="checkbox"><span>Simon Kornblith &mdash; <em>Artificial Intelligence: Do No Harm</em> (Apr)</span></label>
-        <label class="opt"><input type="checkbox"><span>Bishop William Barber II &mdash; <em>Public Theology and Public Policy</em> (May)</span></label>
-        <label class="opt"><input type="checkbox"><span>Majora Carter &mdash; <em>It's Up to Us Pt. 2!</em> (Jun)</span></label>
+        <label class="opt"><input type="checkbox"><span><strong>John Kasich</strong> &mdash; <em>It's Up to Us!</em>&nbsp;(Jan)</span></label>
+        <label class="opt"><input type="checkbox"><span><strong>David Bier &amp; Steven Volk</strong> &mdash; <em>Immigration: What is the Way Forward?</em>&nbsp;(Feb)</span></label>
+        <label class="opt"><input type="checkbox"><span><strong>Claire Babineaux-Fontenot</strong> &mdash; <em>New Tools to End Hunger</em>&nbsp;(Mar)</span></label>
+        <label class="opt"><input type="checkbox"><span><strong>Simon Kornblith</strong> &mdash; <em>Artificial Intelligence: Do No Harm</em>&nbsp;(Apr)</span></label>
+        <label class="opt"><input type="checkbox"><span><strong>Bishop William Barber II</strong> &mdash; <em>Public Theology and Public Policy</em>&nbsp;(May)</span></label>
+        <label class="opt"><input type="checkbox"><span><strong>Majora Carter</strong> &mdash; <em>It's Up to Us Pt. 2!</em>&nbsp;(Jun)</span></label>
       </div>
     </div>
 
@@ -306,12 +306,13 @@
     <!-- Q9 -->
     <div class="q">
       <div class="label">What is your connection to Lorain County?</div>
+      <div class="hint">Select all that apply</div>
       <div class="field-body">
-        <label class="opt"><input type="radio" name="q9"><span>Resident</span></label>
-        <label class="opt"><input type="radio" name="q9"><span>I work here</span></label>
-        <label class="opt"><input type="radio" name="q9"><span>Student</span></label>
-        <label class="opt"><input type="radio" name="q9"><span>Visiting from elsewhere</span></label>
-        <label class="opt other"><input type="radio" name="q9"><span>Other:</span><input type="text" placeholder="tell us"></label>
+        <label class="opt"><input type="checkbox"><span>Resident</span></label>
+        <label class="opt"><input type="checkbox"><span>I work here</span></label>
+        <label class="opt"><input type="checkbox"><span>Student</span></label>
+        <label class="opt"><input type="checkbox"><span>Visiting from elsewhere</span></label>
+        <label class="opt other"><input type="checkbox"><span>Other:</span><input type="text" placeholder="tell us"></label>
       </div>
     </div>
 
