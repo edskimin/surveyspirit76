@@ -19,6 +19,7 @@
     --line:#cabfa6;
     --line-soft:#ddd4bf;
     --brass:#9a7b3f;
+    --error:#8a2b22;
   }
   *{box-sizing:border-box;margin:0;padding:0;}
   body{
@@ -86,6 +87,7 @@
     margin-left:42px;
     font-size:1.06rem;font-weight:600;color:var(--ink);margin-bottom:4px;
   }
+  .q .label .req{color:var(--brass);font-weight:600;}
   .q .hint{
     margin-left:42px;font-size:.8rem;color:var(--ink-soft);
     font-style:italic;margin-bottom:18px;
@@ -152,6 +154,9 @@
   textarea:focus,.text-in:focus{outline:none;border-color:var(--navy);}
   textarea{min-height:84px;}
 
+  /* ---------- Honeypot (anti-spam, hidden) ---------- */
+  .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+
   /* ---------- Submit ---------- */
   .footer{max-width:720px;margin:30px auto 0;text-align:center;}
   .submit{
@@ -161,11 +166,29 @@
     border-radius:2px;cursor:pointer;transition:background .2s ease;
   }
   .submit:hover{background:#16243d;}
+  .submit:disabled{opacity:.6;cursor:default;}
   .footer .note{margin-top:16px;font-size:.78rem;color:var(--ink-soft);font-style:italic;}
-  .mock-flag{
-    max-width:720px;margin:0 auto 24px;text-align:center;
-    font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--brass);border:1px dashed var(--line);padding:9px;border-radius:2px;
+  .form-error{
+    max-width:720px;margin:0 auto 16px;text-align:center;
+    color:var(--error);font-size:.9rem;font-weight:500;
+    border:1px solid #d8b3ad;background:#fbf1ef;border-radius:2px;padding:12px 16px;
+  }
+
+  /* ---------- Thank-you state ---------- */
+  .thanks{max-width:620px;margin:24px auto 0;}
+  .thanks-card{
+    background:var(--card);border:1px solid var(--line-soft);border-radius:3px;
+    padding:56px 40px;text-align:center;
+    box-shadow:0 1px 0 rgba(27,25,22,.04), 0 14px 30px -28px rgba(27,25,22,.45);
+  }
+  .thanks-card h2{
+    font-family:'Libre Caslon Display',serif;font-weight:400;
+    font-size:2.4rem;color:var(--ink);margin-bottom:14px;
+  }
+  .thanks-card p{font-size:1.02rem;color:var(--ink-soft);max-width:420px;margin:0 auto;}
+  .thanks-card .thanks-meta{
+    margin-top:24px;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--brass);
   }
 
   @media(max-width:560px){
@@ -186,21 +209,24 @@
     <div class="meta">Takes about 3 minutes</div>
   </header>
 
-  <div class="mock-flag">Preview &mdash; for committee review only</div>
+  <form id="surveyForm" onsubmit="return false;">
 
-  <form onsubmit="return false;">
+    <!-- honeypot: leave empty, hidden from real users -->
+    <div class="hp" aria-hidden="true">
+      <label>Website<input type="text" id="hp_website" name="hp_website" tabindex="-1" autocomplete="off"></label>
+    </div>
 
     <!-- Q1 -->
-    <div class="q">
-      <div class="label">Which events did you attend?</div>
+    <div class="q" id="q1">
+      <div class="label">Which events did you attend? <span class="req">*</span></div>
       <div class="hint">Select all that apply</div>
       <div class="field-body">
-        <label class="opt"><input type="checkbox"><span><strong>John Kasich</strong> &mdash; <em>It's Up to Us!</em>&nbsp;(Jan)</span></label>
-        <label class="opt"><input type="checkbox"><span><strong>David Bier &amp; Steven Volk</strong> &mdash; <em>Immigration: What is the Way Forward?</em>&nbsp;(Feb)</span></label>
-        <label class="opt"><input type="checkbox"><span><strong>Claire Babineaux-Fontenot</strong> &mdash; <em>New Tools to End Hunger</em>&nbsp;(Mar)</span></label>
-        <label class="opt"><input type="checkbox"><span><strong>Simon Kornblith</strong> &mdash; <em>Artificial Intelligence: Do No Harm</em>&nbsp;(Apr)</span></label>
-        <label class="opt"><input type="checkbox"><span><strong>William Barber III and Ben Barber</strong> &mdash; <em>The Urgency of Now</em>&nbsp;(May)</span></label>
-        <label class="opt"><input type="checkbox"><span><strong>Majora Carter</strong> &mdash; <em>It's Up to Us Pt. 2!</em>&nbsp;(Jun)</span></label>
+        <label class="opt"><input type="checkbox" name="events_attended" value="John Kasich"><span><strong>John Kasich</strong> &mdash; <em>It's Up to Us!</em>&nbsp;(Jan)</span></label>
+        <label class="opt"><input type="checkbox" name="events_attended" value="David Bier & Steven Volk"><span><strong>David Bier &amp; Steven Volk</strong> &mdash; <em>Immigration: What is the Way Forward?</em>&nbsp;(Feb)</span></label>
+        <label class="opt"><input type="checkbox" name="events_attended" value="Claire Babineaux-Fontenot"><span><strong>Claire Babineaux-Fontenot</strong> &mdash; <em>New Tools to End Hunger</em>&nbsp;(Mar)</span></label>
+        <label class="opt"><input type="checkbox" name="events_attended" value="Simon Kornblith"><span><strong>Simon Kornblith</strong> &mdash; <em>Artificial Intelligence: Do No Harm</em>&nbsp;(Apr)</span></label>
+        <label class="opt"><input type="checkbox" name="events_attended" value="William Barber III and Ben Barber"><span><strong>William Barber III and Ben Barber</strong> &mdash; <em>The Urgency of Now</em>&nbsp;(May)</span></label>
+        <label class="opt"><input type="checkbox" name="events_attended" value="Majora Carter"><span><strong>Majora Carter</strong> &mdash; <em>It's Up to Us Pt. 2!</em>&nbsp;(Jun)</span></label>
       </div>
     </div>
 
@@ -208,13 +234,13 @@
     <div class="q">
       <div class="label">How did you first hear about the series?</div>
       <div class="field-body">
-        <label class="opt"><input type="radio" name="q2"><span>Social media</span></label>
-        <label class="opt"><input type="radio" name="q2"><span>Email</span></label>
-        <label class="opt"><input type="radio" name="q2"><span>Word of mouth</span></label>
-        <label class="opt"><input type="radio" name="q2"><span>LorainCounty.com</span></label>
-        <label class="opt"><input type="radio" name="q2"><span>School or organization</span></label>
-        <label class="opt"><input type="radio" name="q2"><span>News coverage</span></label>
-        <label class="opt other"><input type="radio" name="q2"><span>Other:</span><input type="text" placeholder="tell us"></label>
+        <label class="opt"><input type="radio" name="heard_about" value="Social media"><span>Social media</span></label>
+        <label class="opt"><input type="radio" name="heard_about" value="Email"><span>Email</span></label>
+        <label class="opt"><input type="radio" name="heard_about" value="Word of mouth"><span>Word of mouth</span></label>
+        <label class="opt"><input type="radio" name="heard_about" value="LorainCounty.com"><span>LorainCounty.com</span></label>
+        <label class="opt"><input type="radio" name="heard_about" value="School or organization"><span>School or organization</span></label>
+        <label class="opt"><input type="radio" name="heard_about" value="News coverage"><span>News coverage</span></label>
+        <label class="opt other"><input type="radio" name="heard_about" value="Other"><span>Other:</span><input type="text" id="heard_about_other" placeholder="tell us"></label>
       </div>
     </div>
 
@@ -223,12 +249,12 @@
       <div class="label">What drew you to attend?</div>
       <div class="hint">Select all that apply</div>
       <div class="field-body">
-        <label class="opt"><input type="checkbox"><span>A specific speaker</span></label>
-        <label class="opt"><input type="checkbox"><span>The topic</span></label>
-        <label class="opt"><input type="checkbox"><span>Free admission</span></label>
-        <label class="opt"><input type="checkbox"><span>Supporting community programming</span></label>
-        <label class="opt"><input type="checkbox"><span>Someone recommended it</span></label>
-        <label class="opt other"><input type="checkbox"><span>Other:</span><input type="text" placeholder="tell us"></label>
+        <label class="opt"><input type="checkbox" name="reasons_attended" value="A specific speaker"><span>A specific speaker</span></label>
+        <label class="opt"><input type="checkbox" name="reasons_attended" value="The topic"><span>The topic</span></label>
+        <label class="opt"><input type="checkbox" name="reasons_attended" value="Free admission"><span>Free admission</span></label>
+        <label class="opt"><input type="checkbox" name="reasons_attended" value="Supporting community programming"><span>Supporting community programming</span></label>
+        <label class="opt"><input type="checkbox" name="reasons_attended" value="Someone recommended it"><span>Someone recommended it</span></label>
+        <label class="opt other"><input type="checkbox" name="reasons_attended" value="Other"><span>Other:</span><input type="text" id="reasons_attended_other" placeholder="tell us"></label>
       </div>
     </div>
 
@@ -237,11 +263,11 @@
       <div class="label">Overall, how satisfied were you with the event(s) you attended?</div>
       <div class="field-body">
         <div class="scale">
-          <label><input type="radio" name="q4"><span class="pip">1</span></label>
-          <label><input type="radio" name="q4"><span class="pip">2</span></label>
-          <label><input type="radio" name="q4"><span class="pip">3</span></label>
-          <label><input type="radio" name="q4"><span class="pip">4</span></label>
-          <label><input type="radio" name="q4"><span class="pip">5</span></label>
+          <label><input type="radio" name="overall_satisfaction" value="1"><span class="pip">1</span></label>
+          <label><input type="radio" name="overall_satisfaction" value="2"><span class="pip">2</span></label>
+          <label><input type="radio" name="overall_satisfaction" value="3"><span class="pip">3</span></label>
+          <label><input type="radio" name="overall_satisfaction" value="4"><span class="pip">4</span></label>
+          <label><input type="radio" name="overall_satisfaction" value="5"><span class="pip">5</span></label>
         </div>
         <div class="scale-ends"><span>Very dissatisfied</span><span>Very satisfied</span></div>
       </div>
@@ -258,13 +284,13 @@
           </thead>
           <tbody>
             <tr><td>Speaker quality</td>
-              <td class="cell"><input type="radio" name="m1"></td><td class="cell"><input type="radio" name="m1"></td><td class="cell"><input type="radio" name="m1"></td><td class="cell"><input type="radio" name="m1"></td><td class="cell"><input type="radio" name="m1"></td></tr>
+              <td class="cell"><input type="radio" name="rating_speaker" value="1"></td><td class="cell"><input type="radio" name="rating_speaker" value="2"></td><td class="cell"><input type="radio" name="rating_speaker" value="3"></td><td class="cell"><input type="radio" name="rating_speaker" value="4"></td><td class="cell"><input type="radio" name="rating_speaker" value="5"></td></tr>
             <tr><td>Topic relevance</td>
-              <td class="cell"><input type="radio" name="m2"></td><td class="cell"><input type="radio" name="m2"></td><td class="cell"><input type="radio" name="m2"></td><td class="cell"><input type="radio" name="m2"></td><td class="cell"><input type="radio" name="m2"></td></tr>
+              <td class="cell"><input type="radio" name="rating_topic" value="1"></td><td class="cell"><input type="radio" name="rating_topic" value="2"></td><td class="cell"><input type="radio" name="rating_topic" value="3"></td><td class="cell"><input type="radio" name="rating_topic" value="4"></td><td class="cell"><input type="radio" name="rating_topic" value="5"></td></tr>
             <tr><td>Venue and seating</td>
-              <td class="cell"><input type="radio" name="m3"></td><td class="cell"><input type="radio" name="m3"></td><td class="cell"><input type="radio" name="m3"></td><td class="cell"><input type="radio" name="m3"></td><td class="cell"><input type="radio" name="m3"></td></tr>
+              <td class="cell"><input type="radio" name="rating_venue" value="1"></td><td class="cell"><input type="radio" name="rating_venue" value="2"></td><td class="cell"><input type="radio" name="rating_venue" value="3"></td><td class="cell"><input type="radio" name="rating_venue" value="4"></td><td class="cell"><input type="radio" name="rating_venue" value="5"></td></tr>
             <tr><td>Registration and check-in</td>
-              <td class="cell"><input type="radio" name="m4"></td><td class="cell"><input type="radio" name="m4"></td><td class="cell"><input type="radio" name="m4"></td><td class="cell"><input type="radio" name="m4"></td><td class="cell"><input type="radio" name="m4"></td></tr>
+              <td class="cell"><input type="radio" name="rating_registration" value="1"></td><td class="cell"><input type="radio" name="rating_registration" value="2"></td><td class="cell"><input type="radio" name="rating_registration" value="3"></td><td class="cell"><input type="radio" name="rating_registration" value="4"></td><td class="cell"><input type="radio" name="rating_registration" value="5"></td></tr>
           </tbody>
         </table>
       </div>
@@ -275,17 +301,17 @@
       <div class="label">How likely are you to recommend Spirit of '76 events to a friend or colleague?</div>
       <div class="field-body">
         <div class="scale">
-          <label><input type="radio" name="q6"><span class="pip">0</span></label>
-          <label><input type="radio" name="q6"><span class="pip">1</span></label>
-          <label><input type="radio" name="q6"><span class="pip">2</span></label>
-          <label><input type="radio" name="q6"><span class="pip">3</span></label>
-          <label><input type="radio" name="q6"><span class="pip">4</span></label>
-          <label><input type="radio" name="q6"><span class="pip">5</span></label>
-          <label><input type="radio" name="q6"><span class="pip">6</span></label>
-          <label><input type="radio" name="q6"><span class="pip">7</span></label>
-          <label><input type="radio" name="q6"><span class="pip">8</span></label>
-          <label><input type="radio" name="q6"><span class="pip">9</span></label>
-          <label><input type="radio" name="q6"><span class="pip">10</span></label>
+          <label><input type="radio" name="nps" value="0"><span class="pip">0</span></label>
+          <label><input type="radio" name="nps" value="1"><span class="pip">1</span></label>
+          <label><input type="radio" name="nps" value="2"><span class="pip">2</span></label>
+          <label><input type="radio" name="nps" value="3"><span class="pip">3</span></label>
+          <label><input type="radio" name="nps" value="4"><span class="pip">4</span></label>
+          <label><input type="radio" name="nps" value="5"><span class="pip">5</span></label>
+          <label><input type="radio" name="nps" value="6"><span class="pip">6</span></label>
+          <label><input type="radio" name="nps" value="7"><span class="pip">7</span></label>
+          <label><input type="radio" name="nps" value="8"><span class="pip">8</span></label>
+          <label><input type="radio" name="nps" value="9"><span class="pip">9</span></label>
+          <label><input type="radio" name="nps" value="10"><span class="pip">10</span></label>
         </div>
         <div class="scale-ends"><span>Not at all likely</span><span>Extremely likely</span></div>
       </div>
@@ -294,13 +320,13 @@
     <!-- Q7 -->
     <div class="q">
       <div class="label">What did you find most valuable about the event(s)?</div>
-      <div class="field-body"><textarea placeholder="Your answer"></textarea></div>
+      <div class="field-body"><textarea id="most_valuable" placeholder="Your answer"></textarea></div>
     </div>
 
     <!-- Q8 -->
     <div class="q">
       <div class="label">What topics or speakers would you like to see in future series?</div>
-      <div class="field-body"><textarea placeholder="Your answer"></textarea></div>
+      <div class="field-body"><textarea id="future_topics" placeholder="Your answer"></textarea></div>
     </div>
 
     <!-- Q9 -->
@@ -308,11 +334,11 @@
       <div class="label">What is your connection to Lorain County?</div>
       <div class="hint">Select all that apply</div>
       <div class="field-body">
-        <label class="opt"><input type="checkbox"><span>Resident</span></label>
-        <label class="opt"><input type="checkbox"><span>I work here</span></label>
-        <label class="opt"><input type="checkbox"><span>Student</span></label>
-        <label class="opt"><input type="checkbox"><span>Visiting from elsewhere</span></label>
-        <label class="opt other"><input type="checkbox"><span>Other:</span><input type="text" placeholder="tell us"></label>
+        <label class="opt"><input type="checkbox" name="county_connection" value="Resident"><span>Resident</span></label>
+        <label class="opt"><input type="checkbox" name="county_connection" value="I work here"><span>I work here</span></label>
+        <label class="opt"><input type="checkbox" name="county_connection" value="Student"><span>Student</span></label>
+        <label class="opt"><input type="checkbox" name="county_connection" value="Visiting from elsewhere"><span>Visiting from elsewhere</span></label>
+        <label class="opt other"><input type="checkbox" name="county_connection" value="Other"><span>Other:</span><input type="text" id="county_connection_other" placeholder="tell us"></label>
       </div>
     </div>
 
@@ -320,15 +346,130 @@
     <div class="q">
       <div class="label">Any other feedback?</div>
       <div class="hint">Optional</div>
-      <div class="field-body"><textarea placeholder="Your answer"></textarea></div>
+      <div class="field-body"><textarea id="other_feedback" placeholder="Your answer"></textarea></div>
     </div>
 
+    <div id="formError" class="form-error" role="alert" style="display:none;"></div>
+
     <div class="footer">
-      <button class="submit" type="submit">Submit Feedback</button>
+      <button class="submit" type="button" id="submitBtn">Submit Feedback</button>
       <p class="note">All responses are anonymous unless you choose to share contact details.</p>
     </div>
 
   </form>
+
+  <section class="thanks" id="thankyou" style="display:none;">
+    <div class="thanks-card">
+      <div class="rule"><span class="star">&#9733;</span></div>
+      <h2>Thank you</h2>
+      <p>Your feedback has been recorded. We are grateful you joined us, and your input helps shape the speakers and topics still to come.</p>
+      <p class="thanks-meta">Spirit of '76 &middot; Lorain County</p>
+    </div>
+  </section>
+
+<script>
+  const SUPABASE_URL = "https://wngfqlbgtngeeflqsiar.supabase.co";
+  const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InduZ2ZxbGJndG5nZWVmbHFzaWFyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyOTc1NzIsImV4cCI6MjA5MTg3MzU3Mn0.FgLrfMuED1jTcTEHN8FHUDJHWw6G5pL4CCDdt7dqUTQ";
+
+  const form = document.getElementById('surveyForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const errorBox = document.getElementById('formError');
+
+  function checkedValues(name){
+    return Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(function(el){ return el.value; });
+  }
+  function radioValue(name){
+    var el = document.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value : null;
+  }
+  function intValue(name){
+    var v = radioValue(name);
+    return v === null ? null : parseInt(v, 10);
+  }
+  function textValue(id){
+    var el = document.getElementById(id);
+    if(!el) return null;
+    var v = el.value.trim();
+    return v === '' ? null : v;
+  }
+  function showError(msg){
+    errorBox.textContent = msg;
+    errorBox.style.display = 'block';
+  }
+  function hideError(){
+    errorBox.style.display = 'none';
+  }
+  function showThankYou(){
+    form.style.display = 'none';
+    document.getElementById('thankyou').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  async function submitSurvey(){
+    // honeypot: bots fill this; treat as success without storing
+    if(textValue('hp_website')){ showThankYou(); return; }
+
+    var events = checkedValues('events_attended');
+    if(events.length === 0){
+      showError('Please select at least one event you attended (question 1).');
+      document.getElementById('q1').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+    hideError();
+
+    var reasons = checkedValues('reasons_attended');
+    var county = checkedValues('county_connection');
+
+    var payload = {
+      events_attended: events,
+      heard_about: radioValue('heard_about'),
+      heard_about_other: textValue('heard_about_other'),
+      reasons_attended: reasons.length ? reasons : null,
+      reasons_attended_other: textValue('reasons_attended_other'),
+      overall_satisfaction: intValue('overall_satisfaction'),
+      rating_speaker: intValue('rating_speaker'),
+      rating_topic: intValue('rating_topic'),
+      rating_venue: intValue('rating_venue'),
+      rating_registration: intValue('rating_registration'),
+      nps: intValue('nps'),
+      most_valuable: textValue('most_valuable'),
+      future_topics: textValue('future_topics'),
+      county_connection: county.length ? county : null,
+      county_connection_other: textValue('county_connection_other'),
+      other_feedback: textValue('other_feedback')
+    };
+
+    var original = submitBtn.textContent;
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting...';
+
+    try{
+      var res = await fetch(SUPABASE_URL + '/rest/v1/survey_responses', {
+        method: 'POST',
+        headers: {
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+          'Content-Type': 'application/json',
+          'Prefer': 'return=minimal'
+        },
+        body: JSON.stringify(payload)
+      });
+      if(res.ok || res.status === 201){
+        showThankYou();
+      } else {
+        var detail = await res.text();
+        throw new Error(detail || ('HTTP ' + res.status));
+      }
+    } catch(err){
+      submitBtn.disabled = false;
+      submitBtn.textContent = original;
+      showError('Something went wrong submitting your feedback. Please try again in a moment.');
+      console.error('Survey submit failed:', err);
+    }
+  }
+
+  submitBtn.addEventListener('click', submitSurvey);
+</script>
 
 </body>
 </html>
